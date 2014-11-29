@@ -1,0 +1,51 @@
+//-******************************
+extends _utility/default
+//-******************************
+
+
+//-******************************
+//-head内要素の上書き or 追加
+block title
+	title ホーム
+
+block append stylesheets
+	link(rel='stylesheet' href='/common/css/01.css')
+//-******************************
+
+
+//-******************************
+//- .l-contents内要素の作成
+block content
+	//- ul.test
+	//- 	- for (var i = 0; i < 10; i++){
+	//- 		li(class='aaa'+i) aa
+	//- 	- }
+
+	//- ul.newItems
+	//- 	- for (var i = 0; i < prod.newItems.length; i++){
+	//- 		li 最新アイテム -> #{prod.newItems[i]}
+	//- 	-}
+	.navChara#charaPinTrigger
+
+	.gNav#gNavPinTrigger
+		ul
+			li
+				a メニュー
+			li
+				a メニュー
+
+	- for (var i = 1; i < 5; i++) {
+		section(class='section' + i)
+			h1 見出し
+			.block コンテンツ
+		// /section END
+	-}
+
+
+
+block append footScript
+	script(src='/common/js/lib.js')
+	script(src='/common/js/main.js')
+
+
+//-******************************

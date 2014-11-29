@@ -1,0 +1,84 @@
+@charset "utf-8";
+/* ******************************************
+utility-single.scss
+プロジェクトに関係なく、汎用的に使用できる単体モジュールを管理します
+※一つのタグに3つ以上このclassが付く場合は、別途複合モジュール化を検討する
+※接頭辞には、「u-」を付与
+****************************************** */
+
+
+/* -------------------------------------------
+位置の指定
+------------------------------------------- */
+.u-txtCenter { text-align: center;}
+.u-txtLeft   { text-align: left;}
+.u-txtRight  { text-align: right;}
+
+
+
+
+/* -------------------------------------------
+余白の指定
+------------------------------------------- */
+$u_spaceClass: true !default;
+$u_spacePadding: true !default;
+$u_endValue: 6 !default;
+
+@if $u_spaceClass {
+	@for $i from 0 through $u_endValue {
+		.u-mt#{$i*10} { margin-top: 10px * $i !important;}
+		.u-mb#{$i*10} { margin-bottom: 10px * $i !important;}
+		.u-ml#{$i*10} { margin-left: 10px * $i !important;}
+		.u-mr#{$i*10} { margin-right: 10px * $i !important;}
+		@if $u_spacePadding {
+			.u-pt#{$i*10} { padding-top: 10px * $i !important;}
+			.u-pb#{$i*10} { padding-bottom: 10px * $i !important;}
+			.u-pl#{$i*10} { padding-bottom: 10px * $i !important;}
+			.u-pr#{$i*10} { padding-bottom: 10px * $i !important;}
+		}
+	}
+}
+//ネガティブマージン
+@if $u_spaceClass {
+	@for $i from 1 through $u_endValue {
+		.u-ngMt#{$i*10} { margin-top: -10px * $i !important;}
+		.u-ngMb#{$i*10} { margin-bottom: -10px * $i !important;}
+		.u-ngMl#{$i*10} { margin-left: -10px * $i !important;}
+		.u-ngMr#{$i*10} { margin-right: -10px * $i !important;}
+	}
+}
+
+
+
+
+/* -------------------------------------------
+幅の指定
+------------------------------------------- */
+$u_widthClass: true !default;
+$u_width_endValue: 20 !default;
+@if $u_widthClass {
+	@for $i from 0 through $u_width_endValue {
+		.u-w#{$i*50} { width: 50px * $i !important;}
+	}
+}
+
+
+
+
+/* -------------------------------------------
+その他
+------------------------------------------- */
+//透過したい要素自体に設定
+.u-opacity {
+	@include transition(all, 0.3s);
+	&:hover {
+		@include opacity(0.7);
+	}
+}
+
+//clearfix
+.u-clearfix {
+	@include clearfix;
+}
+
+

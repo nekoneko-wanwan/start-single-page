@@ -1,0 +1,236 @@
+@charset "utf-8";
+/* ******************************************
+utility-single.scss
+プロジェクトに関係なく、汎用的に使用できる複合モジュールを管理します
+※block接頭辞には、「u-」を付与
+****************************************** */
+
+
+/* -------------------------------------------
+ボタン
+------------------------------------------- */
+//---------------------
+// 使い方
+// <p class="u-btn"><a href="" class="u-btn__body"></p>
+//---------------------
+.u-btn {
+	margin: 20px 0;
+	text-align: center;
+}
+.u-btn__body {
+	//グラデーション用mixin *デフォルトはグレー
+	@mixin grad($baseColor: #f7f7f7, $textColor: #333, $borderColor: #ccc) {
+		$baseColor_light: lighten($baseColor, 5%);
+		$baseColor_dark : darken($baseColor, 5%);
+		background: $baseColor; //<-順番はこの位置で
+		@include background-image(linear-gradient(top, $baseColor, $baseColor_dark));
+		@include filter-gradient($baseColor, $baseColor_dark, vertical);
+		border-color: $borderColor;
+		box-shadow:inset 0px 1px 0px 0px $baseColor_light;
+		color: $textColor;
+		&:hover {
+			background-color: $baseColor_light;
+			@include background-image(linear-gradient(top, $baseColor_dark, $baseColor));
+			@include filter-gradient($baseColor_dark, $baseColor, vertical);
+		}
+	}
+
+	@include inline-block;
+	@include border-radius(4px);
+	@include grad;
+	border: 1px solid #ccc;
+	cursor: pointer;
+	font-weight: bold;
+	line-height: 1.8;
+	margin: 0 .5em;
+	padding: 10px 40px;
+	text-align: center;
+	text-decoration:none;
+
+	//Element Modifier *color
+	&.is-primary { //青色
+		@include grad(#2256e2, #fff, darken(#2256e2, 10%));
+	}
+	&.is-action { //緑色
+		@include grad(#44b918, #fff, darken(#44b918, 10%));
+	}
+	&.is-caution { //赤
+		@include grad(#d0451b, #fff, darken(#d0451b, 10%));
+	}
+
+	//Block Modifier *size
+	.is-small & {
+		font-size: 80%;
+		padding: 5px 15px;
+	}
+	.is-large & {
+		font-size: 130%;
+		padding: 20px 60px;
+	}
+}
+
+
+
+
+
+/* -------------------------------------------
+media ※画像(media)とテキストの組み合わせ
+------------------------------------------- */
+//---------------------
+// 使い方
+// <div class="u-media>
+//   <p class="u-media__img"><a href=""><img src="" alt="画像" /></a></p> * __imgに.is-rightで右回り、.is-narrow,is-wideで余白変更
+//   <p class="u-media__body">text</p> *__bodyに.is-underで下に回りこませる
+// </div>
+// 
+//---------------------
+.u-media {
+	@include clearfix;
+}
+.u-media__img {
+	float: left;
+	margin-right: 20px;
+	margin-bottom: 0;
+	img {
+		display: block;
+	}
+
+	//Element Modifier
+	&.is-narrow { margin-right: 10px;}
+	&.is-wide   { margin-right: 40px;}
+	&.is-right  {
+		float: right;
+		margin-left: 20px;
+		margin-right: 0;
+		&.is-narrow { margin-left: 10px;}
+		&.is-wide   { margin-left: 40px;}
+	}
+}
+.u-media__body {
+	overflow: hidden;
+	//Element Modifier
+	&.is-under {
+		overflow: visible;
+	}
+}
+
+
+
+
+/* -------------------------------------------
+grid
+------------------------------------------- */
+//---------------------
+// 1行を12個のカラムで構成すると考える
+//
+// -----使い方-----
+// *padding, borderはie8以上
+// <div class="u-grid has-gutter10">
+//   <div class="u-grid__item is-3div12">
+//     <p>ここが実際のコンテンツを入れる箇所</p>
+//   </div>
+// </div>
+//
+// -----以下、デフォルト設定----- *必要に応じて調整
+// 大枠の左右の余白は削除 *必要に応じて親にoverflow:hidden
+//      → modifierにする場合は、u-gridのmodifierに is-fillで調整
+// 基本は余白あり（20px）
+//      → 余白は左右の合計なので注意
+//---------------------
+.u-grid {
+	@include clearfix;
+	//デフォルトは余白20px(has-gutter10)
+	margin: 10px -10px;
+	//modifier
+	//is-fillを設定する場合はhas-gutterNNの上層に
+	&.has-gutter0 {
+		margin: 0;
+	}
+	&.has-gutter10 {
+		margin: 5px -5px;
+	}
+	//デフォルト設定
+	// &.has-gutter20 {
+	// 	margin-left: -10px;
+	// 	margin-right: -10px;
+	// }
+	&.has-gutter30 {
+		margin: 15px -15px;
+	}
+	&.has-gutter40 {
+		margin: 20px -20px;
+	}
+}
+.u-grid__item {
+	@include box-sizing(border-box);
+	display: block;
+	float: left;
+	width: auto;
+	//デフォルト設定
+	padding: 10px;
+
+	//フォールバック
+	.lt-ie7 & {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+		border: none !important;
+	}
+	//カラム幅
+	&.is-1div12 {
+		width: 8.333%;
+	}
+	&.is-2div12 {
+		width: 16.667%;
+	}
+	&.is-3div12 {
+		width: 25%;
+	}
+	&.is-4div12 {
+		width: 33.333%;
+	}
+	&.is-5div12 {
+		width: 41.666%;
+	}
+	&.is-6div12 {
+		width: 50%;
+	}
+	&.is-7div12 {
+		width: 58.333%;
+	}
+	&.is-8div12 {
+		width: 66.666%;
+	}
+	&.is-9div12 {
+		width: 75%;
+	}
+	&.is-10div12 {
+		width: 83.33%;
+	}
+	&.is-11div12 {
+		width: 91.666%;
+	}
+	&.is-12div12 {
+		width: 100%;
+	}
+	//余白の設定
+	.has-gutter0 & {
+		padding: 0;
+	}
+	.has-gutter10 & {
+		padding: 5px;
+	}
+	//デフォルト設定
+	// .has-gutter20 & {
+	// 	padding: 10px;
+	// }
+	.has-gutter30 & {
+		padding: 15px;
+	}
+	.has-gutter40 & {
+		padding: 20px;
+	}
+}
+
+
+
+

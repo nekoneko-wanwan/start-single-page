@@ -1,0 +1,196 @@
+@charset "utf-8";
+/////////////////////////////////////////////
+// abstract.scss
+// プロジェクトで使用する関数・Mixinを管理します
+/////////////////////////////////////////////
+
+
+
+
+//-------------------------------------------
+//@extend ※'.'ではなく、'%'で単体生成されない
+//-------------------------------------------
+/* clearfix extend */
+%clearfix {
+	*zoom: 1;
+	&:after { clear: both;content: " ";display: block;font-size: 0;height: 0;visibility: hidden;}
+}
+
+/* opacity extend */
+%opacity {
+	@include transition(all, 0.3s);
+	&:hover {
+		@include opacity(0.7);
+	}
+}
+
+/* icon_arrow */
+//下部のmixinと連動
+%ex_ic_arrowSet {
+	@include inline-block;
+	background-image: url(../img/ic_arrow_set.png);
+	content: '';
+	margin: 5px 5px 0 0;
+	overflow: hidden;
+	vertical-align: top;
+}
+
+
+
+
+//-------------------------------------------
+//@Mixin
+//-------------------------------------------
+//画像置換
+@mixin imgReplace($h) {
+	@include inline-block;
+	height: 0;
+	overflow: hidden;
+	padding-top: abs($h); //絶対値
+}
+
+
+//position style
+//ex)-> @include position(10px,null,0,0,fixed);
+@mixin position($t: auto, $r: auto, $b: auto, $l: auto, $property: absolute) {
+	bottom: $b;
+	left: $l;
+	position: $property;
+	right: $r;
+	top: $t;
+}
+
+
+//矢印アイコンのセット
+$ic_arrowSet_posX : 0 !default;
+$ic_arrowSet_posY : 0 !default;
+$ic_arrowSet_h : 0 !default;
+$ic_arrowSet_w : 0 !default;
+$ic_arrowSet_mt: 0;
+
+// 使い方
+// @include ic_arrowSet('before','2','black');
+// /common/img/にic_arrow_set.pngが入っている前提 *変更があればextendの方を変える
+@mixin ic_arrowSet($direction:'before', $type:'1', $color:'black' ) {
+	&:#{$direction} {
+		@extend %ex_ic_arrowSet;
+		@if($type == '1') {
+			$ic_arrowSet_posY: 0;
+			$ic_arrowSet_h: 11px;
+			$ic_arrowSet_w: 11px;
+			$ic_arrowSet_mt: 5px;
+		} @else if($type == '2') {
+			$ic_arrowSet_posY: -20px;
+			$ic_arrowSet_h: 8px;
+			$ic_arrowSet_w: 9px;
+			$ic_arrowSet_mt: 7px;
+		} @else if($type == '3') {
+			$ic_arrowSet_posY: -40px;
+			$ic_arrowSet_h: 8px;
+			$ic_arrowSet_w: 5px;
+			$ic_arrowSet_mt: 7px;
+		} @else if($type == '4') {
+			$ic_arrowSet_posY: -60px;
+			$ic_arrowSet_h: 5px;
+			$ic_arrowSet_w: 6px;
+			$ic_arrowSet_mt: 7px;
+		}
+		@if($color == 'black') {
+			$ic_arrowSet_posX: 0;
+		} @else if($color == 'gray') {
+			$ic_arrowSet_posX: -20px;
+		} @else if($color == 'blue1') {
+			$ic_arrowSet_posX: -40px;
+		} @else if($color == 'blue2') {
+			$ic_arrowSet_posX: -60px;
+		} @else if($color == 'pink') {
+			$ic_arrowSet_posX: -80px;
+		} @else if($color == 'white') {
+			$ic_arrowSet_posX: -100px;
+		}
+
+		background-position: $ic_arrowSet_posX $ic_arrowSet_posY;
+		height: $ic_arrowSet_h;
+		margin-top: $ic_arrowSet_mt;
+		width: $ic_arrowSet_w;
+	}
+}
+
+//別タブアイコン
+@mixin ic_newWindow($direction:'before' ) {
+	&:#{$direction} {
+		@include inline-block;
+		background-image: url(../img/ic_newWindow.png);
+		content: '';
+		height: 0;
+		margin: 5px;
+		overflow: hidden;
+		padding-top: 9px;
+		vertical-align: top;
+		width: 12px;
+	}
+}
+
+
+//グラデーション
+//vertical, horizontal, radial
+@mixin gradient($start-color, $end-color, $orientation) {
+	background: $start-color;
+		@if $orientation == vertical {
+			// vertical
+			background: -moz-linear-gradient(top,  $start-color 0%, $end-color 100%);
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$start-color), color-stop(100%,$end-color));
+			background: -webkit-linear-gradient(top,  $start-color 0%,$end-color 100%);
+			background: -o-linear-gradient(top,  $start-color 0%,$end-color 100%);
+			background: -ms-linear-gradient(top,  $start-color 0%,$end-color 100%);
+			background: linear-gradient(to bottom,  $start-color 0%,$end-color 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$start-color', endColorstr='$end-color',GradientType=0 );
+
+		} @else if $orientation == horizontal {
+			// horizontal
+			background: -moz-linear-gradient(left,  $start-color 0%, $end-color 100%);
+			background: -webkit-gradient(linear, left top, right top, color-stop(0%,$start-color), color-stop(100%,$end-color));
+			background: -webkit-linear-gradient(left,  $start-color 0%,$end-color 100%);
+			background: -o-linear-gradient(left,  $start-color 0%,$end-color 100%);
+			background: -ms-linear-gradient(left,  $start-color 0%,$end-color 100%);
+			background: linear-gradient(to right,  $start-color 0%,$end-color 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$start-color', endColorstr='$end-color',GradientType=1 );
+
+		} @else {
+			// radial
+			background: -moz-radial-gradient(center, ellipse cover,  $start-color 0%, $end-color 100%);
+			background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,$start-color), color-stop(100%,$end-color));
+			background: -webkit-radial-gradient(center, ellipse cover,  $start-color 0%,$end-color 100%);
+			background: -o-radial-gradient(center, ellipse cover,  $start-color 0%,$end-color 100%);
+			background: -ms-radial-gradient(center, ellipse cover,  $start-color 0%,$end-color 100%);
+			background: radial-gradient(ellipse at center,  $start-color 0%,$end-color 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$start-color', endColorstr='$end-color',GradientType=1 );
+		}
+ }
+
+
+
+
+//-------------------------------------------
+//responsive @mixin
+//-------------------------------------------
+@mixin mQuery_pc {
+	// PC表示: 768+20=788px～
+	@media only screen and (min-width: $width-tablet + $width-scrollbar) {
+		@content;
+	}
+}
+
+@mixin mQuery_tablet {
+	// タブレット表示: 480+20=500px ～ 768+20-1=787px
+	@media only screen and (min-width: $width-smartphone + $width-scrollbar) and (max-width: $width-tablet + $width-scrollbar - 1) {
+		@content;
+	}
+}
+
+@mixin mQuery_sp {
+	// スマートフォン表示: 480+20-1=499px～
+	@media only screen and (max-width: $width-smartphone + $width-scrollbar - 1) {
+		@content;
+	}
+}

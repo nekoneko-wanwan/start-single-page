@@ -1,0 +1,122 @@
+@charset "utf-8";
+/* ******************************************
+base.scss
+主にタグに対しての基本スタイルを管理します
+****************************************** */
+
+
+/* -------------------------------------------
+全体に関する指定
+------------------------------------------- */
+body {
+	color: #333;
+	font-family: 'メイリオ',Meiryo,'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro',Verdana,'ＭＳ Ｐゴシック','MS PGothic',sans-serif;
+	font-size: 82%;
+	line-height: 1.8;
+	word-break: keep-all;
+	word-wrap: break-word;
+}
+
+
+
+
+/* -------------------------------------------
+block要素
+------------------------------------------- */
+p {
+	margin-bottom: 1.5em;
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+table {
+	th {
+		vertical-align: top;
+	}
+}
+li {
+	list-style: none;
+}
+
+
+
+
+/* -------------------------------------------
+inline要素
+------------------------------------------- */
+strong, b {
+	//bは非推奨だが、先方入力にタグがあるため
+	font-weight: bold;
+}
+a {
+	//normal, visited, focus, hover, active
+	//@include link-colors($g_CIcolor_sub, $g_CIcolor_sub, #d00058, $g_CIcolor_sub, #d00058);
+	&:link {
+		color: #0074be;
+		text-decoration: underline;
+	}
+	&:visited {
+		color: #0074be;
+	}
+	&:hover {
+		//color: $g_ciColor;
+		text-decoration: none;
+	}
+	a:active {
+		
+	}
+}
+sup {
+	bottom: -0.25em;
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	top: -0.5em;
+}
+
+
+
+/* -------------------------------------------
+置換要素
+------------------------------------------- */
+label {
+	cursor: pointer;
+	+ label {
+		margin-left: 1em;
+	}
+}
+img {
+	vertical-align: top;
+}
+input {
+	&[type=text],
+	&[type=password] {
+		border: 1px solid #ccc;
+		margin: 0;
+		padding: 5px 0;
+	}
+	&[type=submit],
+	&[type=button],
+	&[type=reset] {
+		cursor: pointer;
+		font-weight: bold;
+		margin: 0;
+		padding: 5px 10px;
+		vertical-align: top;
+		+ input[type=submit],
+		+ input[type=button],
+		+ input[type=reset] {
+			margin-left: 1em;
+		}
+	}
+	&[type=radio],
+	&[type=checkbox] {
+		label & {
+			cursor: pointer;
+			vertical-align: text-top;
+		}
+	}
+}
+
+
+

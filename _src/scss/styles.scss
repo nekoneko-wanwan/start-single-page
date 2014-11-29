@@ -1,0 +1,31 @@
+@charset "utf-8";
+/*! ******************************************
+このファイルはscssで作成されました
+****************************************** */
+
+
+//-------------------------------------------
+//partialファイル一式
+//※読み込み順は変えないこと
+//-------------------------------------------
+
+//compass
+@import "compass";
+@import "compass/reset";
+
+//foundation プロジェクトの基本的な設定やベースとなる下地をまとめたもの
+@import "foundation/_compass-prefix";
+@import "foundation/_compass-extension";
+@import "foundation/_setting";  //グローバル変数を設定
+@import "foundation/_abstract"; //グローバル関数・mixinを設定
+@import "foundation/_base";     //主に要素セレクタに対する設定
+
+//project プロジェクト固有のパターン
+@import "project/_layout";      //レイアウト（ユニークなもの）に対する設定
+@import "project/_module";      //プロジェクト固有のモジュール
+
+//component プロジェクトに関係なく再利用できる汎用性の高いパターン
+@import "component/_utility-module.scss";  //汎用的に使い回すモジュール
+@import "component/_utility-single.scss";  //汎用的に使い回す単体class
+
+

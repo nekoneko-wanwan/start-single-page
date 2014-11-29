@@ -1,0 +1,31 @@
+//-******************************
+//- 全ページで使用
+
+//-グローバル変数の指定
+//- - var authenticated = true
+//- body(class=authenticated ? 'authed' : 'anon')のように使用
+
+//-mixin
+include  mix_module
+//-******************************
+doctype
+html(lang = "ja")
+	head
+		meta(charset = "utf-8")
+
+		block title
+			title #{lang.title.ja}
+
+		block meta
+				meta(name='description', content='')
+				meta(name='keywords', content='')
+
+		block stylesheets
+			link(rel='stylesheet' href='/common/css/styles.css')
+
+		block headScript
+
+	body
+		block content
+		block footScript
+			script(src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')

@@ -1,0 +1,186 @@
+@charset "utf-8";
+/* ******************************************
+layout.scss
+プロジェクトのレイアウト（ユニークなもの）を管理します
+※blockの接頭辞には、「l-」を付与
+※詳しいルールはスタイルガイドを参照
+****************************************** */
+
+
+/* -------------------------------------------
+共通
+------------------------------------------- */
+
+
+
+
+/* -------------------------------------------
+header
+------------------------------------------- */
+/* header 基本
+-------------------------- */
+
+
+/* headerNav
+-------------------------- */
+
+
+/* gNav
+-------------------------- */
+//置換するスプリット画像のY座標
+// $gNav_defaultPos: 0;
+// $gNav_hoverPos: -45px;
+// $gNav_activePos: -90px;
+
+// //座標と横サイズ割り当てるするmixin
+// @mixin gNavPos($width:0, $posLeft:0) {
+// 	background-position: $posLeft $gNav_hoverPos;
+// 	width: $width;
+// 	a {
+// 		background-position: $posLeft $gNav_defaultPos;
+// 		&.is-active {
+// 			background-position: $posLeft $gNav_activePos;
+// 			&:hover {
+// 				@include opacity(1);
+// 			}
+// 		}
+// 	}
+// }
+// .l-gNav {
+// 	@include position(null, null, 17px, 0, absolute);
+// 	ul {
+// 		@extend %clearfix;
+// 	}
+// 	li {
+// 		background-image: url(../img/gNav.png);
+// 		float: left;
+// 	}
+// 	a {
+// 		@include imgReplace(45px);
+// 		@include transition(opacity .3s);
+// 		background-image: url(../img/gNav.png);
+// 		width: 100%;
+// 		&:hover {
+// 			@include opacity(0);
+// 		}
+// 	}
+// }
+// .l-gNav__home    { @include gNavPos(86px, 0);}
+// .l-gNav__view    { @include gNavPos(104px, -86px);}
+// .l-gNav__onlyone { @include gNavPos(180px, -190px);}
+// .l-gNav__recipe  { @include gNavPos(148px, -370px);}
+// .l-gNav__shop    { @include gNavPos(132px, -518px);}
+// .l-gNav__contact { @include gNavPos(140px, -650px);}
+// .l-gNav__aboutus { @include gNavPos(100px, -790px);}
+// .l-gNav__recruit { @include gNavPos(100px, -890px);}
+
+
+
+
+/* -------------------------------------------
+contents
+------------------------------------------- */
+
+
+
+/* -------------------------------------------
+column
+------------------------------------------- */
+.l-mainColumn {
+	float: left;
+	overflow: hidden;
+	width: $g_basePcWindow_main;
+	&.is-right {
+		float: right;
+	}
+
+	//section要素
+	section {
+		padding: 0 14px 0 14px;
+		> h1, > h2, > h3, > h4, > h5, > h6 {
+			margin-left: -14px;
+			margin-right: -14px;
+		}
+		> section {
+			margin-top: 30px;
+			> section {
+				padding: 0;
+			}
+		}
+		& + section {
+			margin-top: 40px;
+		}
+		//余白が不要な場合
+		&.is-fill {
+			padding: 0;
+			> h1, > h2, > h3, > h4, > h5, > h6 {
+				margin-left: 0;
+				margin-right: 0;
+			}
+		}
+	}
+}
+.l-subColumn {
+	float: right;
+	width: $g_basePcWindow_sub;
+	.is-left & {
+		float: left;
+	}
+}
+
+
+
+
+/* -------------------------------------------
+topicPath
+------------------------------------------- */
+.l-topicPath {
+	li {
+		display: inline;
+		font-size: nth($g_fontSizeList, 3);
+		& + li:before {
+			content: "\203A";
+			margin: 0 .3em 0 0.3em;
+			text-decoration: none;
+		}
+	}
+	margin-bottom: 20px;
+}
+
+
+
+
+/* -------------------------------------------
+banner
+------------------------------------------- */
+
+
+
+
+/* -------------------------------------------
+footer
+------------------------------------------- */
+// .l-footer {
+// 	background: url(../img/bg_footer.png) center 0 no-repeat #fff;
+// 	margin: 0 0 30px;
+// 	padding-top: 45px;
+// 	position: relative;
+// 	z-index: 2;
+// }
+// .l-footer__inner {
+// 	margin: 0 auto;
+// 	position: relative;
+// 	width: $g_basePcWindow;
+// }
+
+
+
+/* pageTop
+-------------------------- */
+
+
+
+
+
+
+

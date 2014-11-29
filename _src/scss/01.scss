@@ -1,0 +1,81 @@
+@charset "utf-8";
+/*! ******************************************
+このファイルはscssで作成されました
+****************************************** */
+
+
+//-------------------------------------------
+//partialファイル一式
+//※読み込み順は変えないこと
+//-------------------------------------------
+@import "compass";            //compass
+@import "foundation/_compass-prefix";
+@import "foundation/_compass-extension";
+@import "foundation/_setting";  //グローバル変数を設定
+@import "foundation/_abstract"; //グローバル関数・mixinを設定
+
+
+
+
+/* -------------------------------------------
+
+------------------------------------------- */
+.navChara {
+	$h: 200px;
+	$w: 200px;
+	@include transition(margin .5s ease-out);
+
+	background-color: #fff;
+	border-radius: 50%;
+	height: $h;
+	left: 50%;
+	margin-left: -($w / 2);
+	top: 600px;
+	position: absolute;
+	width: $w;
+	z-index: 100;
+	&.is_fixed {
+		margin-top: 50px;
+	}
+	&.one {
+		background-color: green;
+	}
+	&.two {
+		background-color: blue;
+	}
+}
+
+
+
+
+
+
+
+
+section {
+	height: 1000px;
+	z-index: 1;
+}
+.section1 {
+	background-color: #E6AC6C;
+}
+.section2 {
+	background-color: #DD7D61;
+}
+.section3 {
+	background-color: #4A2F28;
+}
+.section4 {
+	background-color: #7B8E67;
+}
+.section5 {
+	background-color: #C6C663;
+}
+
+
+
+
+
+
+
+

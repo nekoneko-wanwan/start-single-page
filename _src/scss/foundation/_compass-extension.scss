@@ -1,0 +1,158 @@
+@charset "utf-8";
+
+// _extension.scss
+// Copyright 2014 © kamem
+// http://www.opensource.org/licenses/mit-license.php
+// https://github.com/kamem/compass.default
+
+
+//----------------------------------------------------------------------
+// css3
+//----------------------------------------------------------------------
+///* --------- */
+  // ■text-shadow-repeat [同じテキストシャドウを繰り返したい場合]
+
+  // $value: text-shadowの値
+  // $num: 繰り返したい数
+///* --------- */
+@mixin text-shadow-repeat($value: 0 0 1px rgba(0,0,0,0.3),$num : 1) {
+  $text-shadowList : $value;
+  @for $i from 1 through $num - 1 {
+    $text-shadowList : unquote($text-shadowList + "," + $value);
+  }
+  text-shadow: $text-shadowList;
+}
+
+
+///* --------- */
+  // ■box-shadow-repeat [同じボックスシャドウを繰り返したい場合]
+
+  // $value: box-shadowの値
+  // $num: 繰り返したい数
+///* --------- */
+@mixin box-shadow-repeat($value: 0 0 1px rgba(0,0,0,0.3),$num : 1) {
+  $box-shadowList : $value;
+  @for $i from 1 through $num - 1 {
+    $box-shadowList : unquote($box-shadowList + "," + $value);
+  }
+  box-shadow: $box-shadowList;
+}
+
+
+///* --------- */
+  // ■triangle-set [作った三角形を$dirに合わせてボックスの外側にセットする]
+
+  // $num: 大きさ（10px 20px のように2つ値を書くことで横と高さを指定することができます。）
+  // $color: 色
+  // $dir: 向き（top,right,bottom,left）
+  // $position: 三角形をボックスのどの位置にセットするか（真ん中の場合50%）
+  // $selecter: after or before どちらを使うか
+
+  // ex)
+  //   @include triangle-set(
+  //       10px, //大きさ: 10px 20px のように2つ値を書くことで横と高さを指定することができます。
+  //       black, // 色
+  //       top //向き: top,right,bottom,left
+  //   );
+///* --------- */
+$size: '';
+@mixin triangle-set($num: 10px,$color: black,$dir: top,$position: 50%,$selecter: after) {
+  $size: (nth($num,1) / 2);
+  $h: '';
+  @if length($num) == 1 {
+    $h: $num;
+  } @else {
+    $h: nth($num,2);
+  }
+  $direction: if($dir == top,bottom,if($dir == bottom,top,if($dir == left,right,if($dir == right,left,''))));
+  &#{':' + $selecter} {
+    @include triangle($num,$color,$dir);
+    #{$dir}: -($size + $h);
+    position: absolute;
+    @if($position != false) {
+      #{if($dir == left or $dir == right,top,left)}: $position;
+      @if($position == 50%) {
+        margin-#{if($dir == left or $dir == right,top,left)}: -$size;
+      }
+    }
+  }
+}
+
+
+///* --------- */
+  // ■triangle [三角形を作る]
+
+  // $num: 大きさ（10px 20px のように2つ値を書くことで横と高さを指定することができます。）
+  // $color: 色
+  // $dir: 向き（top,right,bottom,left）
+
+  // ex)
+  //   @include triangle-set(
+  //       10px, //大きさ: 10px 20px のように2つ値を書くことで横と高さを指定することができます。
+  //       black, // 色
+  //       top, // 向き: top,right,bottom,left
+  //       50%, // 位置: 三角形をボックスのどの位置にセットするか（真ん中の場合50%）
+  //       after // before or after どちらを使うか
+  //   );
+///* --------- */
+@mixin triangle($num: 10px,$color: black,$dir: top) {
+  $size: (nth($num,1) / 2);
+  $h: '';
+  @if length($num) == 1 {
+    $h: $num;
+  } @else {
+    $h: nth($num,2);
+  }
+  $direction: if($dir == top,bottom,if($dir == bottom,top,if($dir == left,right,if($dir == right,left,''))));
+  content: "";
+  font-size: 0;
+  border: $size solid transparent;
+  border-#{$direction}-color: $color;
+  border-#{$direction}-width: $h;
+}
+
+
+///* --------- */
+  // ■arrow-set [作った矢印を$dirに合わせてボックスのセンターにセットする]
+
+  // $num: 大きさ
+  // $bold: 太さ
+  // $color: 色
+  // $dir: 向き（top,right,bottom,left）
+  // $position: 矢印をボックスのどの位置にセットするか（真ん中の場合50%）
+  // $selecter: after or before どちらを使うか
+///* --------- */
+@mixin arrow-set($num: 10px,$bold: 1px,$color: white,$dir: right,$position: 50%,$selecter: after) {
+  &#{':' + $selecter} {
+    @include arrow($num,$bold,$color,$dir);
+    position: absolute;
+    #{if($dir == left or $dir == right,top,left)}: $position;
+    margin-#{if($dir == left or $dir == right,top,left)}: round(-$size / 2);
+  }
+}
+
+
+///* --------- */
+  // ■arrow [矢印を作る]
+
+  // $num: 大きさ
+  // $bold: 太さ
+  // $color: 色
+  // $dir: 向き（top,right,bottom,left）
+///* --------- */
+@mixin arrow($num: 10px,$bold: 1px,$color: white,$dir: right) {
+  $size: $num;
+  $ary: if($dir == top, (top right),if($dir == right, (right bottom),if($dir == bottom, (bottom left),if($dir == left, (top left),''))));
+  content: '';
+  display: block;
+  width: $size;
+  height: $size;
+  @each $name in $ary {
+    border-#{$name}: $bold solid $color;
+  }
+  @include box-sizing(border-box);
+  @include rotate(-45deg);
+}
+
+
+
