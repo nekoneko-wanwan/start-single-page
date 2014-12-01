@@ -24,8 +24,8 @@ var path = {
         coffee     : 'coffee/**/*.coffee',
         js         : {
                         lib           : 'js/lib/*.js',  //pluginをまとめたライブラリ
-                        origin        : ['js/origin/*.js', '!js/origin/_*.js'],  //自作のもの(_が付いたものは除外),
-                        origin_concat : 'js/origin/_*.js'
+                        origin        : ['js/origin/*.js', '!js/origin/_concat*.js'],  //自作のもの(_が付いたものは除外),
+                        origin_concat : 'js/origin/_concat*.js'
         },
         jade       : ['jade/**/*.jade', '!jade/_*/**/*.jade'],  //htmlとして書き出す対象(_partialを除外)
         jade_watch : 'jade/**/*.jade'  //監視する対象
