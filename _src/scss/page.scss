@@ -9,8 +9,12 @@
 //※読み込み順は変えないこと
 //-------------------------------------------
 @import "compass";            //compass
+
+//外部ライブラリの読み込み
+@import "lib/_compass-extension";
+@import "lib/_super-gradient.scss";
+
 @import "foundation/_compass-prefix";
-@import "foundation/_compass-extension";
 @import "foundation/_setting";  //グローバル変数を設定
 @import "foundation/_abstract"; //グローバル関数・mixinを設定
 

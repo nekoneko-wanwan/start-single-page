@@ -20,6 +20,9 @@ update: 2014/10/14
 ##SMACSSとBEMを基本コンセプトとする
 ###開発用ファイル構成
     -scss/
+        ├ lib/                          //外部のライブラリまとめて格納
+        │      ├ _*.scss
+        │
         ├ component/                    //プロジェクトに関係なく、再利用できる汎用性の高いパターン
         │      ├ _utility-module.scss  //汎用的に使い回すモジュール ※Blockの接頭辞にu-を付与
         │      └ _utility-single.scss  //汎用的に使い回す単体class  ※Blockの接頭辞にu-を付与（乱用注意）

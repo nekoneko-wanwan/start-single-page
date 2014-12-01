@@ -13,9 +13,12 @@
 @import "compass";
 @import "compass/reset";
 
+//外部ライブラリの読み込み
+@import "lib/_compass-extension";
+@import "lib/_super-gradient.scss";
+
 //foundation プロジェクトの基本的な設定やベースとなる下地をまとめたもの
 @import "foundation/_compass-prefix";
-@import "foundation/_compass-extension";
 @import "foundation/_setting";  //グローバル変数を設定
 @import "foundation/_abstract"; //グローバル関数・mixinを設定
 @import "foundation/_base";     //主に要素セレクタに対する設定

@@ -23,8 +23,9 @@ var path = {
         scss       : 'scss/**/*.scss',
         coffee     : 'coffee/**/*.coffee',
         js         : {
-                        lib   : 'js/lib/*.js',      //pluginをまとめたライブラリ
-                        origin: 'js/origin/*.js'  //自作したjs
+                        lib           : 'js/lib/*.js',  //pluginをまとめたライブラリ
+                        origin        : ['js/origin/*.js', '!js/origin/_*.js'],  //自作のもの(_が付いたものは除外),
+                        origin_concat : 'js/origin/_*.js'
         },
         jade       : ['jade/**/*.jade', '!jade/_*/**/*.jade'],  //htmlとして書き出す対象(_partialを除外)
         jade_watch : 'jade/**/*.jade'  //監視する対象
@@ -129,10 +130,17 @@ _gulp.task('js-min', function() {
     .pipe(_gulp.dest(path.deploy.js))
     .pipe(_livereload({ auto: true }));
 
-    //自作jsの圧縮（とりあえず結合はしない）
+    //自作jsの圧縮（結合しないもの）
     _gulp.src(path.dev.js.origin)
     .pipe(_plumber())  //エラーが出てもwatchを止めない
-    // .pipe(_concat('script.js') )
+    .pipe(_uglify())   //圧縮
+    .pipe(_gulp.dest(path.deploy.js))
+    .pipe(_livereload({ auto: true }));
+
+    //自作jsの圧縮と結合
+    _gulp.src(path.dev.js.origin_concat)
+    .pipe(_plumber())  //エラーが出てもwatchを止めない
+    .pipe(_concat('script.js') )
     .pipe(_uglify())   //圧縮
     .pipe(_gulp.dest(path.deploy.js))
     .pipe(_livereload({ auto: true }));
@@ -150,7 +158,7 @@ _gulp.task('watch', function() {
 
     _gulp.watch(path.dev.jade_watch, ['jade']    );
     _gulp.watch(path.dev.scss,       ['compass'] );
-    _gulp.watch([path.dev.js.origin, path.dev.js.lib],         ['js-min']  );
+    _gulp.watch([path.dev.js.origin, path.dev.js.origin_concat, path.dev.js.lib], ['js-min'] );
 });
 
 
