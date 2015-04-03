@@ -101,10 +101,11 @@ _gulp.task('js-min', function() {
     .pipe(_gulp.dest(path.deploy.js + 'lib/'))
     .pipe(_livereload({ auto: true }));
 
-    //pluginの結合（基本的に最初から圧縮されているのを使うので圧縮は不要※必要なライセンス表記を消さないように）
+    //pluginの結合
     _gulp.src(path.dev.js.lib_concat)
     .pipe(_plumber())  //エラーが出てもwatchを止めない
     .pipe(_concat('lib_concat.js'))  //結合
+    .pipe(_uglify({preserveComments: 'some'}))   //圧縮
     .pipe(_gulp.dest(path.deploy.js))
     .pipe(_livereload({ auto: true }));
 
